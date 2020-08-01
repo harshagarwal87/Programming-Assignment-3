@@ -12,25 +12,22 @@ best <- function(state, outcome) {
   # Creating a vector of valid outcomes
   Outcomenames <- OutcomeColnames[3:5]
   # Checking if state provided by user is valid
-  if (!state %in% ReqOutcomeData$State) 
-    stop("invalid state")
+  if (!state %in% ReqOutcomeData$State) stop("invalid state")
   # Checking if outcome provided by user is valid
-  else if (!outcome %in% Outcomenames)
-    stop("invalid outcome")
-  else
-    # Splitting dataframe on basis of different states
-    StateSplit <- split(ReqOutcomeData, ReqOutcomeData$State)
-    # Subsetting data frame containing rows with user provided state only
-    StateSplitDf <- data.frame(StateSplit[[state]])
-    # Changing column names for newly created data frame
-    colnames(StateSplitDf) <- OutcomeColnames
-    # Coercing required outcome column data to numeric
-    StateSplitDf[, outcome] <- as.numeric(StateSplitDf[, outcome])
-    # Arranging data in ascending order on basis of Hospital name
-    StateSplitDf <- StateSplitDf[order(StateSplitDf$Hospital),]
-    # Arranging data in ascending order on basis of required outcome
-    StateSplitDf <- StateSplitDf[order(StateSplitDf[outcome]),]
-    # getting value of Hospital from first row
-    BestHospital <- StateSplitDf$Hospital[1]
-    BestHospital
+  if (!outcome %in% Outcomenames) stop("invalid outcome")
+  # Splitting dataframe on basis of different states
+  StateSplit <- split(ReqOutcomeData, ReqOutcomeData$State)
+  # Subsetting data frame containing rows with user provided state only
+  StateSplitDf <- data.frame(StateSplit[[state]])
+  # Changing column names for newly created data frame
+  colnames(StateSplitDf) <- OutcomeColnames
+  # Coercing required outcome column data to numeric
+  StateSplitDf[, outcome] <- as.numeric(StateSplitDf[, outcome])
+  # Arranging data in ascending order on basis of Hospital name
+  StateSplitDf <- StateSplitDf[order(StateSplitDf$Hospital),]
+  # Arranging data in ascending order on basis of required outcome
+  StateSplitDf <- StateSplitDf[order(StateSplitDf[outcome]),]
+  # getting value of Hospital from first row
+  BestHospital <- StateSplitDf$Hospital[1]
+  BestHospital
 }
