@@ -18,7 +18,7 @@ best <- function(state, outcome) {
   else if (!outcome %in% Outcomenames)
     stop("invalid outcome")
   else
-    # Splitting dataframe on basis of diferent states
+    # Splitting dataframe on basis of different states
     StateSplit <- split(ReqOutcomeData, ReqOutcomeData$State)
     # Subsetting data frame containing rows with user provided state only
     StateSplitDf <- data.frame(StateSplit[[state]])
@@ -26,6 +26,8 @@ best <- function(state, outcome) {
     colnames(StateSplitDf) <- OutcomeColnames
     # Coercing required outcome column data to numeric
     StateSplitDf[, outcome] <- as.numeric(StateSplitDf[, outcome])
+    # Arranging data in ascending order on basis of Hospital name
+    StateSplitDf <- StateSplitDf[order(StateSplitDf$Hospital),]
     # Arranging data in ascending order on basis of required outcome
     StateSplitDf <- StateSplitDf[order(StateSplitDf[outcome]),]
     # getting value of Hospital from first row
