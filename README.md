@@ -1,7 +1,7 @@
 # Programming-Assignment-3
-Coursera programming assignment
+## Coursera programming assignment
 
-Best.R
+### Best.R
 
 Write a function called best that take two arguments: the 2-character abbreviated name of a state and an
 outcome name. The function reads the outcome-of-care-measures.csv file and returns a character vector
