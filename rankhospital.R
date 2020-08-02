@@ -20,7 +20,7 @@ rankhospital <- function(state, outcome, num = "best") {
   # Splitting dataframe on basis of different states
   StateSplit <- split(ReqOutcomeData, ReqOutcomeData$State)
   # Subsetting data frame containing rows with user provided state only
-  StateSplitDf <- data.frame(StateSplit[[state]])
+  StateSplitDf <- StateSplit[[state]]
   # Changing column names for newly created data frame
   colnames(StateSplitDf) <- OutcomeColnames
   # Coercing required outcome column data to numeric
