@@ -27,38 +27,25 @@ rankall <- function(outcome, num = "best") {
   ReqOutcomeData <- ReqOutcomeData[order(ReqOutcomeData$Hospital), ]
   # Arranging data in ascending order on basis of required outcome
   SReqOutcomeData <- ReqOutcomeData[order(ReqOutcomeData[outcome]), ]
-  # # Creating a vector of unique states value
-  # UniqueStates <- sort(unique( SReqOutcomeData$State))
-  # # Initializing RankAllDf - which have the end data frame
-  # RankAllDf <- data.frame()
-  # 
-  # for (i in seq_along(UniqueStates)) {
-  #   StatesData <- SReqOutcomeData[SReqOutcomeData$State == UniqueStates[i], ]
-  #   # Setting value of num for best & worst respectively
-  #   if (num == "best")
-  #     num <- 1
-  #   if (num == "worst")
-  #     num <- nrow(StatesData)
-  #   StateSplitDf <- StatesData[num, 1:2]
-  #   StateSplitDf[1,2] <- UniqueStates[i]
-  #   RankAllDf <- rbind(RankAllDf, StateSplitDf)
-  # }
-  # RankAllDf
   # Splitting dataframe on basis of different states
   StateSplit <- split(SReqOutcomeData, SReqOutcomeData$State)
   # Creating and initializing RankAllDf
   RankAllDf <- data.frame()
+  # Setting value of num for best =1
+  if (num == "best")
+    num <- 1
   # Looping through StateSplit list for every state
   for (i in seq_along(StateSplit)) {
-    # Setting value of num for best & worst respectively
-    if (num == "best")
-      num <- 1
+    # Setting value of num for worst = last row
     if (num == "worst")
-      num <- nrow(StateSplit[[i]])
+      NumValue <- nrow(StateSplit[[i]])
+    else {
+      NumValue <- num
+    }
     # Subsetting data frame from the list for current value of state in the loop
     StateSplitDf <- StateSplit[[i]]
-    # Subsetting row = num from the data frame and extracting columns 1 & 2
-    StateSplitDf <- StateSplitDf[num, 1:2]
+    # Subsetting row = NumValue from the data frame and extracting columns 1 & 2
+    StateSplitDf <- StateSplitDf[NumValue, 1:2]
     # Adding value of state to state column to ensure final data frame has
     # state values, incase total rows in StateSplitDf is less than num
     StateSplitDf[1,2] <- names(StateSplit[i])
